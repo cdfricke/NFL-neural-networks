@@ -5,6 +5,11 @@
 # Desc: Main python script for PHYSICS 5680 - Big Data Analytics & Machine Learning final project
 #
 
+# DEPENDENCIES
 import numpy as np
 import pandas as pd
 import plotly_express as px
+import geopandas as gpd
+import mapclassify as mc
+
+
