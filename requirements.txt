@@ -1,5 +1,4 @@
 pandas
 numpy
-geopandas
 plotly-express
-mapclassify
+plotly
