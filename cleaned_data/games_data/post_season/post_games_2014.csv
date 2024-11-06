@@ -1,0 +1,13 @@
+,type,game_id,home_team,away_team,week,season,state_of_game,game_url,home_score,away_score
+3583,post,2015010300,CAR,ARI,18,2014,POST,http://www.nfl.com/liveupdate/game-center/2015010300/2015010300_gtd.json,27.0,16.0
+3584,post,2015010301,PIT,BAL,18,2014,POST,http://www.nfl.com/liveupdate/game-center/2015010301/2015010301_gtd.json,17.0,30.0
+3585,post,2015010400,IND,CIN,18,2014,POST,http://www.nfl.com/liveupdate/game-center/2015010400/2015010400_gtd.json,26.0,10.0
+3586,post,2015010401,DAL,DET,18,2014,POST,http://www.nfl.com/liveupdate/game-center/2015010401/2015010401_gtd.json,24.0,20.0
+3587,post,2015011000,NE,BAL,18,2014,POST,http://www.nfl.com/liveupdate/game-center/2015011000/2015011000_gtd.json,35.0,31.0
+3588,post,2015011001,SEA,CAR,18,2014,POST,http://www.nfl.com/liveupdate/game-center/2015011001/2015011001_gtd.json,31.0,17.0
+3589,post,2015011100,GB,DAL,18,2014,POST,http://www.nfl.com/liveupdate/game-center/2015011100/2015011100_gtd.json,26.0,21.0
+3590,post,2015011101,DEN,IND,18,2014,POST,http://www.nfl.com/liveupdate/game-center/2015011101/2015011101_gtd.json,13.0,24.0
+3591,post,2015011800,SEA,GB,18,2014,POST,http://www.nfl.com/liveupdate/game-center/2015011800/2015011800_gtd.json,28.0,22.0
+3592,post,2015011801,NE,IND,18,2014,POST,http://www.nfl.com/liveupdate/game-center/2015011801/2015011801_gtd.json,45.0,7.0
+3593,post,2015012500,CRT,IRV,18,2014,POST,http://www.nfl.com/liveupdate/game-center/2015012500/2015012500_gtd.json,28.0,32.0
+3594,post,2015020100,SEA,NE,18,2014,POST,http://www.nfl.com/liveupdate/game-center/2015020100/2015020100_gtd.json,24.0,28.0

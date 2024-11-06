@@ -1,0 +1,13 @@
+,type,game_id,home_team,away_team,week,season,state_of_game,game_url,home_score,away_score
+3523,post,2010010901,CIN,NYJ,18,2009,POST,http://www.nfl.com/liveupdate/game-center/2010010901/2010010901_gtd.json,14.0,24.0
+3524,post,2010010900,DAL,PHI,18,2009,POST,http://www.nfl.com/liveupdate/game-center/2010010900/2010010900_gtd.json,34.0,14.0
+3525,post,2010011001,NE,BAL,18,2009,POST,http://www.nfl.com/liveupdate/game-center/2010011001/2010011001_gtd.json,14.0,33.0
+3526,post,2010011000,ARI,GB,18,2009,POST,http://www.nfl.com/liveupdate/game-center/2010011000/2010011000_gtd.json,51.0,45.0
+3527,post,2010011601,NO,ARI,18,2009,POST,http://www.nfl.com/liveupdate/game-center/2010011601/2010011601_gtd.json,45.0,14.0
+3528,post,2010011600,IND,BAL,18,2009,POST,http://www.nfl.com/liveupdate/game-center/2010011600/2010011600_gtd.json,20.0,3.0
+3529,post,2010011700,MIN,DAL,18,2009,POST,http://www.nfl.com/liveupdate/game-center/2010011700/2010011700_gtd.json,34.0,3.0
+3530,post,2010011701,SD,NYJ,18,2009,POST,http://www.nfl.com/liveupdate/game-center/2010011701/2010011701_gtd.json,14.0,17.0
+3531,post,2010012400,IND,NYJ,18,2009,POST,http://www.nfl.com/liveupdate/game-center/2010012400/2010012400_gtd.json,30.0,17.0
+3532,post,2010012401,NO,MIN,18,2009,POST,http://www.nfl.com/liveupdate/game-center/2010012401/2010012401_gtd.json,31.0,28.0
+3533,post,2010013100,APR,NPR,18,2009,POST,http://www.nfl.com/liveupdate/game-center/2010013100/2010013100_gtd.json,41.0,34.0
+3534,post,2010020700,IND,NO,18,2009,POST,http://www.nfl.com/liveupdate/game-center/2010020700/2010020700_gtd.json,17.0,31.0

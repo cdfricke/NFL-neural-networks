@@ -1,0 +1,13 @@
+,type,game_id,home_team,away_team,week,season,state_of_game,game_url,home_score,away_score
+3619,post,2018010600,KC,TEN,18,2017,POST,http://www.nfl.com/liveupdate/game-center/2018010600/2018010600_gtd.json,21.0,22.0
+3620,post,2018010601,LA,ATL,18,2017,POST,http://www.nfl.com/liveupdate/game-center/2018010601/2018010601_gtd.json,13.0,26.0
+3621,post,2018010700,JAX,BUF,18,2017,POST,http://www.nfl.com/liveupdate/game-center/2018010700/2018010700_gtd.json,10.0,3.0
+3622,post,2018010701,NO,CAR,18,2017,POST,http://www.nfl.com/liveupdate/game-center/2018010701/2018010701_gtd.json,31.0,26.0
+3623,post,2018011300,PHI,ATL,18,2017,POST,http://www.nfl.com/liveupdate/game-center/2018011300/2018011300_gtd.json,15.0,10.0
+3624,post,2018011301,NE,TEN,18,2017,POST,http://www.nfl.com/liveupdate/game-center/2018011301/2018011301_gtd.json,35.0,14.0
+3625,post,2018011400,PIT,JAX,18,2017,POST,http://www.nfl.com/liveupdate/game-center/2018011400/2018011400_gtd.json,42.0,45.0
+3626,post,2018011401,MIN,NO,18,2017,POST,http://www.nfl.com/liveupdate/game-center/2018011401/2018011401_gtd.json,29.0,24.0
+3627,post,2018012100,NE,JAX,18,2017,POST,http://www.nfl.com/liveupdate/game-center/2018012100/2018012100_gtd.json,24.0,20.0
+3628,post,2018012101,PHI,MIN,18,2017,POST,http://www.nfl.com/liveupdate/game-center/2018012101/2018012101_gtd.json,38.0,7.0
+3629,post,2018012800,APR,NPR,18,2017,POST,http://www.nfl.com/liveupdate/game-center/2018012800/2018012800_gtd.json,24.0,23.0
+3630,post,2018020400,NE,PHI,18,2017,POST,http://www.nfl.com/liveupdate/game-center/2018020400/2018020400_gtd.json,33.0,41.0
