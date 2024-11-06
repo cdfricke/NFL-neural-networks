@@ -1,4 +1,6 @@
 pandas
 numpy
 plotly-express
-plotly
+scikit-learn
+keras
+tensorflow
