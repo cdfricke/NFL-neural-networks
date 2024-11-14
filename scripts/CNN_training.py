@@ -72,11 +72,11 @@ print("Isolating numeric features...")
 df_pbp_numeric = df_pbp.select_dtypes(include="number")
 numeric_features = df_pbp_numeric.columns.tolist()
 
-# scale features and isolate image data
-# WE WILL USE COLUMNS 29,30,33,37-88
+# scale features and isolate image data from numeric data
 print("Isolating image features and scaling them...")
 scaler = MinMaxScaler()
-image_features = numeric_features[29:31] + [numeric_features[33]] + numeric_features[37:89]
+# image_features = numeric_features[29:31] + [numeric_features[33]] + numeric_features[37:89]
+image_features = numeric_features[5:]
 df_pbp[image_features] = scaler.fit_transform(df_pbp[image_features])
 
 print("FINAL SHAPE:", df_pbp.shape)
@@ -100,206 +100,237 @@ df_games['home_win'] = df_games['home_win'].astype(int)
 
 print("FINAL SHAPE:", df_pbp.shape)
 
-# **********************
-# ** TRAIN TEST SPLIT **
-# **********************
-print("\nSplitting data into test and train...")
-VAL_YEAR = 2010
-df_train = df_pbp[df_pbp['season'] != VAL_YEAR]
-df_test = df_pbp[df_pbp['season'] == VAL_YEAR]
-train_games = df_train['game_id'].unique()
-test_games = df_test['game_id'].unique()
-print("All PBP data shape:", df_pbp.shape)
-print("Training data shape:", df_train.shape)
-print("Testing data shape:", df_test.shape)
-print("Games in training data:", len(train_games))
-print("Games in testing data:", len(test_games))
+# ***********************
+# ** LOOP OVER K-FOLDS **
+# ***********************
+for VAL_YEAR in years:
+    print(f"\n*** CURRENT K FOLD: {VAL_YEAR} ***")
+    # **********************
+    # ** TRAIN TEST SPLIT **
+    # **********************
+    print("\nSplitting data into test and train...")
+    df_train = df_pbp[df_pbp['season'] != VAL_YEAR]
+    df_test = df_pbp[df_pbp['season'] == VAL_YEAR]
+    train_games = df_train['game_id'].unique()
+    test_games = df_test['game_id'].unique()
+    print("All PBP data shape:", df_pbp.shape)
+    print("Training data shape:", df_train.shape)
+    print("Testing data shape:", df_test.shape)
+    print("Games in training data:", len(train_games))
+    print("Games in testing data:", len(test_games))
 
-# *******************
-# ** BUILD X AND Y **
-# *******************
-print('\nPopulating X (images) for train and test...')
-# This parameter sets the number of plays to capture from each game
-IMAGE_H = 40
-IMAGE_W = len(image_features)
-IMAGE_SHAPE = (IMAGE_H, IMAGE_W, 1)
-print("Image dimensions:", IMAGE_SHAPE)
+    # *******************
+    # ** BUILD X AND Y **
+    # *******************
+    print('\nPopulating X (images) for train and test...')
+    # This parameter sets the number of plays to capture from each game
+    IMAGE_H = 40
+    IMAGE_W = len(image_features)
+    IMAGE_SHAPE = (IMAGE_H, IMAGE_W, 1)
+    print("Image dimensions:", IMAGE_SHAPE)
 
-X_train = []
-X_test = []
+    X_train = []
+    X_test = []
 
-for game_id in train_games:
-    image = get_image(df=df_train, game_id=int(game_id), columns=image_features)
-    X_train.append(image[:IMAGE_H].reshape(IMAGE_SHAPE))
-for game_id in test_games:
-    image = get_image(df=df_test, game_id=int(game_id), columns=image_features)
-    X_test.append(image[:IMAGE_H].reshape(IMAGE_SHAPE))
+    for game_id in train_games:
+        image = get_image(df=df_train, game_id=int(game_id), columns=image_features)
+        X_train.append(image[:IMAGE_H].reshape(IMAGE_SHAPE))
+    for game_id in test_games:
+        image = get_image(df=df_test, game_id=int(game_id), columns=image_features)
+        X_test.append(image[:IMAGE_H].reshape(IMAGE_SHAPE))
 
-print('\nPopulating Y (labels) for train and test...')
-Y_train = []
-Y_test = []
+    print('\nPopulating Y (labels) for train and test...')
+    Y_train = []
+    Y_test = []
 
-for game_id in train_games:
-    for row in df_games.itertuples():
-        if int(row.game_id) == int(game_id):
-            Y_train.append(row.home_win)
-            break
-for game_id in test_games:
-    for row in df_games.itertuples():
-        if int(row.game_id) == int(game_id):
-            Y_test.append(row.home_win)
-            break
+    for game_id in train_games:
+        for row in df_games.itertuples():
+            if int(row.game_id) == int(game_id):
+                Y_train.append(row.home_win)
+                break
+    for game_id in test_games:
+        for row in df_games.itertuples():
+            if int(row.game_id) == int(game_id):
+                Y_test.append(row.home_win)
+                break
 
-print("Converting to numpy arrays...")
-X_train = np.array(X_train)
-X_test = np.array(X_test)
-Y_train = np.array(Y_train)
-Y_test = np.array(Y_test)
+    print("Converting to numpy arrays...")
+    X_train = np.array(X_train)
+    X_test = np.array(X_test)
+    Y_train = np.array(Y_train)
+    Y_test = np.array(Y_test)
 
-print("X_train:", X_train.shape)
-print("X_test :", X_test.shape)
-print("Y_train:", Y_train.shape)
-print("Y_test :", Y_test.shape)
-
-# *****************
-# ** BUILD MODEL **
-# *****************
-# map an ID to a set of model hyperparams
-set0 = {'NK': 50,       # number of kernels
-        'ACT': 'relu',  # activation function
-        'KS_0': 5,      # Kernel size, layer 0
-        'KS_1': 5,      # Kernel size, layer 2
-        'PS_0': 2,      # pooling size, layer 1
-        'PS_1': 2,      # pooling size, layer 3
-        'HLS': 64,      # Hidden layer size
-        'DROP': 0.0,    # dropout fraction
-        'BATCH': 32     # batch size
-        }
-set1 = {'NK': 50,
-        'ACT': 'relu',
-        'KS_0': 7,
-        'KS_1': 5,
-        'PS_0': 2,
-        'PS_1': 2,
-        'HLS': 64,
-        'DROP': 0.0,
-        'BATCH': 32
-        }
-set2 = {'NK': 50,
-        'ACT': 'relu',
-        'KS_0': 5,
-        'KS_1': 3,
-        'PS_0': 2,
-        'PS_1': 2,
-        'HLS': 64,
-        'DROP': 0.0,
-        'BATCH': 32
-        }
-set3 = {'NK': 50,
-        'ACT': 'relu',
-        'KS_0': 3,
-        'KS_1': 3,
-        'PS_0': 2,
-        'PS_1': 2,
-        'HLS': 64,
-        'DROP': 0.0,
-        'BATCH': 32
-        }
-set4 = {'NK': 50,
-        'ACT': 'tanh',
-        'KS_0': 5,
-        'KS_1': 5,
-        'PS_0': 2,
-        'PS_1': 2,
-        'HLS': 64,
-        'DROP': 0.0,
-        'BATCH': 32
-        }
-set5 = {'NK': 50,
-        'ACT': 'tanh',
-        'KS_0': 7,
-        'KS_1': 5,
-        'PS_0': 2,
-        'PS_1': 2,
-        'HLS': 64,
-        'DROP': 0.0,
-        'BATCH': 32
-        }
-set6 = {'NK': 50,
-        'ACT': 'tanh',
-        'KS_0': 5,
-        'KS_1': 3,
-        'PS_0': 2,
-        'PS_1': 2,
-        'HLS': 64,
-        'DROP': 0.0,
-        'BATCH': 32
-        }
-set7 = {'NK': 50,
-        'ACT': 'tanh',
-        'KS_0': 3,
-        'KS_1': 3,
-        'PS_0': 2,
-        'PS_1': 2,
-        'HLS': 64,
-        'DROP': 0.2,
-        'BATCH': 32
-        }
-
-SET_IDS = [0, 1, 2, 3, 4, 5, 6, 7]
-hp_sets = {0: set0, 1: set1, 2: set2, 3: set3, 4: set4, 5: set5, 6: set6, 7: set7}
-acc_loss_sets = {}
-
-for ID in SET_IDS:
-    print(f"\nBuilding CNN model... (hyp set {ID})")
-    param_set = hp_sets[ID]
-    print(param_set)
-    model = models.Sequential(layers=[
-        Input(IMAGE_SHAPE),
-        Conv2D(filters=param_set['NK'], kernel_size=param_set['KS_0'], activation=param_set['ACT']),
-        MaxPooling2D(pool_size=param_set['PS_0']),
-        Conv2D(filters=param_set['NK'], kernel_size=param_set['KS_1']),
-        MaxPooling2D(pool_size=param_set['PS_1']),
-        Flatten(),
-        Dense(units=param_set['HLS'], activation=param_set['ACT']),
-        Dropout(param_set['DROP']),
-        Dense(units=1, activation='sigmoid')
-    ])
-
-    LOSS_FUNC = 'binary_crossentropy'
-    OPTIMIZER = keras.optimizers.Adam(learning_rate=0.0005)
-    print(f"Compiling model... (loss: {LOSS_FUNC}, opt: adam)")
-    model.compile(optimizer=OPTIMIZER, loss=LOSS_FUNC, metrics=['accuracy'])
+    print("X_train:", X_train.shape)
+    print("X_test :", X_test.shape)
+    print("Y_train:", Y_train.shape)
+    print("Y_test :", Y_test.shape)
 
     # *****************
-    # ** TRAIN MODEL **
+    # ** BUILD MODEL **
     # *****************
-    PATIENCE = 10
-    CALLBACKS = [keras.callbacks.EarlyStopping(monitor='val_loss', patience=PATIENCE),
-                 keras.callbacks.ModelCheckpoint(f'../models/best_CNN_model_set{ID}.keras', save_best_only=True, verbose=0)]
-    EPOCHS = 100
-    BATCH_SIZE = param_set['BATCH']
+    MODEL_DIRECTORY = f'../models/val_year_{VAL_YEAR}/'  # directory where models and training results will be saved
+    # map an ID to a set of model hyperparams
+    set0 = {'NK': 50,       # number of kernels
+            'ACT': 'relu',  # activation function
+            'KS_0': 5,      # Kernel size, layer 0
+            'KS_1': 5,      # Kernel size, layer 2
+            'PS_0': 2,      # pooling size, layer 1
+            'PS_1': 2,      # pooling size, layer 3
+            'HLS': 64,      # Hidden layer size
+            'DROP': 0.3,    # dropout fraction
+            'BATCH': 32     # batch size
+            }
+    set1 = {'NK': 50,
+            'ACT': 'relu',
+            'KS_0': 7,
+            'KS_1': 5,
+            'PS_0': 2,
+            'PS_1': 2,
+            'HLS': 64,
+            'DROP': 0.3,
+            'BATCH': 32
+            }
+    set2 = {'NK': 50,
+            'ACT': 'relu',
+            'KS_0': 5,
+            'KS_1': 3,
+            'PS_0': 2,
+            'PS_1': 2,
+            'HLS': 64,
+            'DROP': 0.3,
+            'BATCH': 32
+            }
+    set3 = {'NK': 50,
+            'ACT': 'relu',
+            'KS_0': 3,
+            'KS_1': 3,
+            'PS_0': 2,
+            'PS_1': 2,
+            'HLS': 64,
+            'DROP': 0.3,
+            'BATCH': 32
+            }
+    set4 = {'NK': 50,
+            'ACT': 'relu',
+            'KS_0': 7,
+            'KS_1': 3,
+            'PS_0': 2,
+            'PS_1': 2,
+            'HLS': 64,
+            'DROP': 0.3,
+            'BATCH': 32
+            }
+    set5 = {'NK': 50,
+            'ACT': 'tanh',
+            'KS_0': 5,
+            'KS_1': 5,
+            'PS_0': 2,
+            'PS_1': 2,
+            'HLS': 64,
+            'DROP': 0.3,
+            'BATCH': 32
+            }
+    set6 = {'NK': 50,
+            'ACT': 'tanh',
+            'KS_0': 7,
+            'KS_1': 5,
+            'PS_0': 2,
+            'PS_1': 2,
+            'HLS': 64,
+            'DROP': 0.3,
+            'BATCH': 32
+            }
+    set7 = {'NK': 50,
+            'ACT': 'tanh',
+            'KS_0': 5,
+            'KS_1': 3,
+            'PS_0': 2,
+            'PS_1': 2,
+            'HLS': 64,
+            'DROP': 0.3,
+            'BATCH': 32
+            }
+    set8 = {'NK': 50,
+            'ACT': 'tanh',
+            'KS_0': 3,
+            'KS_1': 3,
+            'PS_0': 2,
+            'PS_1': 2,
+            'HLS': 64,
+            'DROP': 0.3,
+            'BATCH': 32
+            }
+    set9 = {'NK': 50,
+            'ACT': 'tanh',
+            'KS_0': 7,
+            'KS_1': 3,
+            'PS_0': 2,
+            'PS_1': 2,
+            'HLS': 64,
+            'DROP': 0.3,
+            'BATCH': 32
+            }
 
-    print(f'Training model... (epochs: {EPOCHS}, batch size: {BATCH_SIZE})')
-    training_results = model.fit(
-        x=X_train,
-        y=Y_train,
-        batch_size=BATCH_SIZE,
-        epochs=EPOCHS,
-        callbacks=CALLBACKS,
-        validation_data=(X_test, Y_test),
-        verbose=0
-    )
-    # Get performance metrics
-    hist = training_results.history
-    best_val_acc = hist['val_accuracy'][-PATIENCE-1]
-    best_val_loss = hist['val_loss'][-PATIENCE-1]
-    print(f"Training Complete! (val accuracy: {round(best_val_acc, 4)}, val loss: {round(best_val_loss, 4)})")
-    acc_loss_sets[ID] = (best_val_acc, best_val_loss)
+    SET_IDS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    hp_sets = [set0, set1, set2, set3, set4, set5, set6, set7, set8, set9]
+    acc_loss_sets = {}
 
-print("** MODEL RESULTS **")
-for ID in SET_IDS:
-    (val_acc, val_loss) = acc_loss_sets[ID]
-    print("Set ID:", ID)
-    print("Validation Accuracy:", val_acc, "Validation Loss:", val_loss)
-    print()
+    for ID in SET_IDS:
+        print(f"\nBuilding CNN model... (hyp set {ID})")
+        param_set = hp_sets[ID]
+        print(param_set)
+        model = models.Sequential(layers=[
+            Input(IMAGE_SHAPE),
+            Conv2D(filters=param_set['NK'], kernel_size=param_set['KS_0'], activation=param_set['ACT']),
+            MaxPooling2D(pool_size=param_set['PS_0']),
+            Conv2D(filters=param_set['NK'], kernel_size=param_set['KS_1']),
+            MaxPooling2D(pool_size=param_set['PS_1']),
+            Flatten(),
+            Dense(units=param_set['HLS'], activation=param_set['ACT']),
+            Dropout(param_set['DROP']),
+            Dense(units=1, activation='sigmoid')
+        ])
+
+        LOSS_FUNC = 'binary_crossentropy'
+        OPTIMIZER = keras.optimizers.Adam(learning_rate=0.0005)
+        print(f"Compiling model... (loss: {LOSS_FUNC}, opt: adam)")
+        model.compile(optimizer=OPTIMIZER, loss=LOSS_FUNC, metrics=['accuracy'])
+
+        # *****************
+        # ** TRAIN MODEL **
+        # *****************
+        MODEL_PATH = MODEL_DIRECTORY + f'best_CNN_model_set{ID}.keras'
+        PATIENCE = 5
+        CALLBACKS = [keras.callbacks.EarlyStopping(monitor='val_loss', patience=PATIENCE),
+                     keras.callbacks.ModelCheckpoint(MODEL_PATH, save_best_only=True, verbose=0)]
+        EPOCHS = 25
+        BATCH_SIZE = param_set['BATCH']
+
+        print(f'Training model... (epochs: {EPOCHS}, batch size: {BATCH_SIZE})')
+        training_results = model.fit(
+            x=X_train,
+            y=Y_train,
+            batch_size=BATCH_SIZE,
+            epochs=EPOCHS,
+            callbacks=CALLBACKS,
+            validation_data=(X_test, Y_test),
+            verbose=0
+        )
+        # Get performance metrics
+        hist = training_results.history
+        best_val_acc = hist['val_accuracy'][-PATIENCE-1]
+        best_val_loss = hist['val_loss'][-PATIENCE-1]
+        print(f"Training Complete! (val accuracy: {round(best_val_acc, 4)}, val loss: {round(best_val_loss, 4)})")
+        acc_loss_sets[ID] = (best_val_acc, best_val_loss)
+
+    # *******************************
+    # ** WRITE RESULTS TO TXT FILE **
+    # *******************************
+    DETAILS_PATH = MODEL_DIRECTORY + 'CNN_results.txt'
+    file = open(DETAILS_PATH, "w")
+    file.write("** MODEL RESULTS **\n")
+    for ID in SET_IDS:
+        (val_acc, val_loss) = acc_loss_sets[ID]
+        file.write(f"** Set ID: {ID}\n")
+        file.write(f"** Validation Accuracy: {round(val_acc, 4)}, Validation Loss: {round(val_loss, 4)}\n\n")
+    file.close()
