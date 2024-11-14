@@ -301,7 +301,7 @@ for VAL_YEAR in years:
         # *****************
         MODEL_PATH = MODEL_DIRECTORY + f'best_CNN_model_set{ID}.keras'
         PATIENCE = 5
-        CALLBACKS = [keras.callbacks.EarlyStopping(monitor='val_loss', patience=PATIENCE),
+        CALLBACKS = [keras.callbacks.EarlyStopping(monitor='val_accuracy', patience=PATIENCE),
                      keras.callbacks.ModelCheckpoint(MODEL_PATH, save_best_only=True, verbose=0)]
         EPOCHS = 25
         BATCH_SIZE = param_set['BATCH']

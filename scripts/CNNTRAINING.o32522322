@@ -1,0 +1,901 @@
+The system default contains no modules
+  (env var: LMOD_SYSTEM_DEFAULT_MODULES is empty)
+  No changes in loaded modules
+
+/fs/ess/PAS2038/PHYSICS_5680_OSU/jupyter/bin/python
+2024-11-13 22:37:11.509825: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F AVX512_VNNI FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2024-11-13 22:37:13.479708: I tensorflow/core/util/util.cc:169] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2024-11-13 22:37:14.851518: E tensorflow/stream_executor/cuda/cuda_blas.cc:2981] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2024-11-13 22:37:26.255949: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer.so.7'; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /apps/cuda/11.2.2/lib64
+2024-11-13 22:37:26.257120: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer_plugin.so.7'; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /apps/cuda/11.2.2/lib64
+2024-11-13 22:37:26.257159: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+Reading cleaned PBP Data...
+Reading Game Data...
+
+Preprocessing PBP Data...
+INITIAL SHAPE: (614132, 257)
+Dropping duplicates, filling NaNs...
+Isolating home team possession plays...
+Isolating numeric features...
+Isolating image features and scaling them...
+FINAL SHAPE: (308414, 255)
+
+Preprocessing Game Data...
+INITIAL SHAPE: (3654, 11)
+Dropping duplicates, filling NaNs...
+Running Feature Engineering...
+FINAL SHAPE: (308414, 255)
+
+*** CURRENT K FOLD: 2009 ***
+
+Splitting data into test and train...
+All PBP data shape: (308414, 255)
+Training data shape: (280416, 255)
+Testing data shape: (27998, 255)
+Games in training data: 3321
+Games in testing data: 333
+
+Populating X (images) for train and test...
+Image dimensions: (40, 144, 1)
+
+Populating Y (labels) for train and test...
+Converting to numpy arrays...
+X_train: (3321, 40, 144, 1)
+X_test : (333, 40, 144, 1)
+Y_train: (3321,)
+Y_test : (333,)
+
+Building CNN model... (hyp set 0)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 5, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+2024-11-13 22:38:39.738216: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F AVX512_VNNI FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2024-11-13 22:38:43.787992: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1616] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 30968 MB memory:  -> device: 0, name: Tesla V100-SXM2-32GB, pci bus id: 0000:18:00.0, compute capability: 7.0
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+2024-11-13 22:38:46.763304: I tensorflow/stream_executor/cuda/cuda_dnn.cc:384] Loaded cuDNN version 8101
+Training Complete! (val accuracy: 0.7568, val loss: 0.4979)
+
+Building CNN model... (hyp set 1)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 7, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7447, val loss: 0.5211)
+
+Building CNN model... (hyp set 2)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 5, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7538, val loss: 0.4978)
+
+Building CNN model... (hyp set 3)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 3, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7598, val loss: 0.5107)
+
+Building CNN model... (hyp set 4)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 7, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7327, val loss: 0.5215)
+
+Building CNN model... (hyp set 5)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 5, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7417, val loss: 0.5118)
+
+Building CNN model... (hyp set 6)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 7, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7297, val loss: 0.519)
+
+Building CNN model... (hyp set 7)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 5, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7447, val loss: 0.504)
+
+Building CNN model... (hyp set 8)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 3, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7508, val loss: 0.5124)
+
+Building CNN model... (hyp set 9)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 7, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7267, val loss: 0.5181)
+
+*** CURRENT K FOLD: 2010 ***
+
+Splitting data into test and train...
+All PBP data shape: (308414, 255)
+Training data shape: (280714, 255)
+Testing data shape: (27700, 255)
+Games in training data: 3321
+Games in testing data: 333
+
+Populating X (images) for train and test...
+Image dimensions: (40, 144, 1)
+
+Populating Y (labels) for train and test...
+Converting to numpy arrays...
+X_train: (3321, 40, 144, 1)
+X_test : (333, 40, 144, 1)
+Y_train: (3321,)
+Y_test : (333,)
+
+Building CNN model... (hyp set 0)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 5, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7447, val loss: 0.5206)
+
+Building CNN model... (hyp set 1)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 7, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7087, val loss: 0.5382)
+
+Building CNN model... (hyp set 2)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 5, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7177, val loss: 0.5193)
+
+Building CNN model... (hyp set 3)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 3, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7327, val loss: 0.5268)
+
+Building CNN model... (hyp set 4)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 7, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7568, val loss: 0.5299)
+
+Building CNN model... (hyp set 5)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 5, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7327, val loss: 0.5134)
+
+Building CNN model... (hyp set 6)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 7, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7447, val loss: 0.53)
+
+Building CNN model... (hyp set 7)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 5, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7297, val loss: 0.516)
+
+Building CNN model... (hyp set 8)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 3, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7297, val loss: 0.5187)
+
+Building CNN model... (hyp set 9)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 7, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7237, val loss: 0.5325)
+
+*** CURRENT K FOLD: 2011 ***
+
+Splitting data into test and train...
+All PBP data shape: (308414, 255)
+Training data shape: (280687, 255)
+Testing data shape: (27727, 255)
+Games in training data: 3324
+Games in testing data: 330
+
+Populating X (images) for train and test...
+Image dimensions: (40, 144, 1)
+
+Populating Y (labels) for train and test...
+Converting to numpy arrays...
+X_train: (3324, 40, 144, 1)
+X_test : (330, 40, 144, 1)
+Y_train: (3324,)
+Y_test : (330,)
+
+Building CNN model... (hyp set 0)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 5, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7303, val loss: 0.5573)
+
+Building CNN model... (hyp set 1)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 7, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7091, val loss: 0.5607)
+
+Building CNN model... (hyp set 2)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 5, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7273, val loss: 0.5492)
+
+Building CNN model... (hyp set 3)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 3, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7182, val loss: 0.5537)
+
+Building CNN model... (hyp set 4)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 7, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7061, val loss: 0.5589)
+
+Building CNN model... (hyp set 5)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 5, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7242, val loss: 0.5513)
+
+Building CNN model... (hyp set 6)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 7, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7182, val loss: 0.5726)
+
+Building CNN model... (hyp set 7)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 5, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7152, val loss: 0.5469)
+
+Building CNN model... (hyp set 8)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 3, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7182, val loss: 0.5516)
+
+Building CNN model... (hyp set 9)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 7, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7121, val loss: 0.5604)
+
+*** CURRENT K FOLD: 2012 ***
+
+Splitting data into test and train...
+All PBP data shape: (308414, 255)
+Training data shape: (280307, 255)
+Testing data shape: (28107, 255)
+Games in training data: 3321
+Games in testing data: 333
+
+Populating X (images) for train and test...
+Image dimensions: (40, 144, 1)
+
+Populating Y (labels) for train and test...
+Converting to numpy arrays...
+X_train: (3321, 40, 144, 1)
+X_test : (333, 40, 144, 1)
+Y_train: (3321,)
+Y_test : (333,)
+
+Building CNN model... (hyp set 0)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 5, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7147, val loss: 0.5292)
+
+Building CNN model... (hyp set 1)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 7, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7237, val loss: 0.5284)
+
+Building CNN model... (hyp set 2)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 5, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7327, val loss: 0.5311)
+
+Building CNN model... (hyp set 3)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 3, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7057, val loss: 0.5416)
+
+Building CNN model... (hyp set 4)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 7, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7117, val loss: 0.5335)
+
+Building CNN model... (hyp set 5)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 5, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7237, val loss: 0.5297)
+
+Building CNN model... (hyp set 6)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 7, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7057, val loss: 0.534)
+
+Building CNN model... (hyp set 7)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 5, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7297, val loss: 0.5281)
+
+Building CNN model... (hyp set 8)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 3, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7387, val loss: 0.5418)
+
+Building CNN model... (hyp set 9)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 7, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.6877, val loss: 0.5515)
+
+*** CURRENT K FOLD: 2013 ***
+
+Splitting data into test and train...
+All PBP data shape: (308414, 255)
+Training data shape: (279955, 255)
+Testing data shape: (28459, 255)
+Games in training data: 3323
+Games in testing data: 331
+
+Populating X (images) for train and test...
+Image dimensions: (40, 144, 1)
+
+Populating Y (labels) for train and test...
+Converting to numpy arrays...
+X_train: (3323, 40, 144, 1)
+X_test : (331, 40, 144, 1)
+Y_train: (3323,)
+Y_test : (331,)
+
+Building CNN model... (hyp set 0)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 5, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.719, val loss: 0.5434)
+
+Building CNN model... (hyp set 1)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 7, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7069, val loss: 0.5631)
+
+Building CNN model... (hyp set 2)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 5, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7221, val loss: 0.5422)
+
+Building CNN model... (hyp set 3)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 3, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.71, val loss: 0.5481)
+
+Building CNN model... (hyp set 4)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 7, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.6979, val loss: 0.5592)
+
+Building CNN model... (hyp set 5)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 5, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.716, val loss: 0.5541)
+
+Building CNN model... (hyp set 6)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 7, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7069, val loss: 0.5602)
+
+Building CNN model... (hyp set 7)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 5, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7039, val loss: 0.5495)
+
+Building CNN model... (hyp set 8)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 3, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7069, val loss: 0.5482)
+
+Building CNN model... (hyp set 9)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 7, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.719, val loss: 0.5565)
+
+*** CURRENT K FOLD: 2014 ***
+
+Splitting data into test and train...
+All PBP data shape: (308414, 255)
+Training data shape: (280505, 255)
+Testing data shape: (27909, 255)
+Games in training data: 3322
+Games in testing data: 332
+
+Populating X (images) for train and test...
+Image dimensions: (40, 144, 1)
+
+Populating Y (labels) for train and test...
+Converting to numpy arrays...
+X_train: (3322, 40, 144, 1)
+X_test : (332, 40, 144, 1)
+Y_train: (3322,)
+Y_test : (332,)
+
+Building CNN model... (hyp set 0)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 5, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.762, val loss: 0.5642)
+
+Building CNN model... (hyp set 1)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 7, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7289, val loss: 0.5684)
+
+Building CNN model... (hyp set 2)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 5, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.744, val loss: 0.557)
+
+Building CNN model... (hyp set 3)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 3, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.741, val loss: 0.5712)
+
+Building CNN model... (hyp set 4)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 7, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7259, val loss: 0.5675)
+
+Building CNN model... (hyp set 5)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 5, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7229, val loss: 0.566)
+
+Building CNN model... (hyp set 6)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 7, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7078, val loss: 0.5723)
+
+Building CNN model... (hyp set 7)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 5, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.738, val loss: 0.5601)
+
+Building CNN model... (hyp set 8)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 3, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7108, val loss: 0.5694)
+
+Building CNN model... (hyp set 9)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 7, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.738, val loss: 0.564)
+
+*** CURRENT K FOLD: 2015 ***
+
+Splitting data into test and train...
+All PBP data shape: (308414, 255)
+Training data shape: (279944, 255)
+Testing data shape: (28470, 255)
+Games in training data: 3321
+Games in testing data: 333
+
+Populating X (images) for train and test...
+Image dimensions: (40, 144, 1)
+
+Populating Y (labels) for train and test...
+Converting to numpy arrays...
+X_train: (3321, 40, 144, 1)
+X_test : (333, 40, 144, 1)
+Y_train: (3321,)
+Y_test : (333,)
+
+Building CNN model... (hyp set 0)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 5, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7267, val loss: 0.5365)
+
+Building CNN model... (hyp set 1)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 7, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7327, val loss: 0.5505)
+
+Building CNN model... (hyp set 2)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 5, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7297, val loss: 0.5423)
+
+Building CNN model... (hyp set 3)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 3, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7447, val loss: 0.5429)
+
+Building CNN model... (hyp set 4)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 7, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7387, val loss: 0.5535)
+
+Building CNN model... (hyp set 5)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 5, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7568, val loss: 0.545)
+
+Building CNN model... (hyp set 6)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 7, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7267, val loss: 0.5665)
+
+Building CNN model... (hyp set 7)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 5, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7357, val loss: 0.5431)
+
+Building CNN model... (hyp set 8)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 3, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7447, val loss: 0.5401)
+
+Building CNN model... (hyp set 9)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 7, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7327, val loss: 0.5511)
+
+*** CURRENT K FOLD: 2016 ***
+
+Splitting data into test and train...
+All PBP data shape: (308414, 255)
+Training data shape: (280338, 255)
+Testing data shape: (28076, 255)
+Games in training data: 3322
+Games in testing data: 332
+
+Populating X (images) for train and test...
+Image dimensions: (40, 144, 1)
+
+Populating Y (labels) for train and test...
+Converting to numpy arrays...
+X_train: (3322, 40, 144, 1)
+X_test : (332, 40, 144, 1)
+Y_train: (3322,)
+Y_test : (332,)
+
+Building CNN model... (hyp set 0)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 5, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7199, val loss: 0.5668)
+
+Building CNN model... (hyp set 1)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 7, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7108, val loss: 0.558)
+
+Building CNN model... (hyp set 2)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 5, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7169, val loss: 0.5631)
+
+Building CNN model... (hyp set 3)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 3, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7169, val loss: 0.5723)
+
+Building CNN model... (hyp set 4)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 7, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7199, val loss: 0.5609)
+
+Building CNN model... (hyp set 5)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 5, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7199, val loss: 0.5671)
+
+Building CNN model... (hyp set 6)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 7, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7199, val loss: 0.5737)
+
+Building CNN model... (hyp set 7)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 5, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7139, val loss: 0.5649)
+
+Building CNN model... (hyp set 8)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 3, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.6898, val loss: 0.5735)
+
+Building CNN model... (hyp set 9)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 7, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7078, val loss: 0.5644)
+
+*** CURRENT K FOLD: 2017 ***
+
+Splitting data into test and train...
+All PBP data shape: (308414, 255)
+Training data shape: (280398, 255)
+Testing data shape: (28016, 255)
+Games in training data: 3322
+Games in testing data: 332
+
+Populating X (images) for train and test...
+Image dimensions: (40, 144, 1)
+
+Populating Y (labels) for train and test...
+Converting to numpy arrays...
+X_train: (3322, 40, 144, 1)
+X_test : (332, 40, 144, 1)
+Y_train: (3322,)
+Y_test : (332,)
+
+Building CNN model... (hyp set 0)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 5, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7861, val loss: 0.485)
+
+Building CNN model... (hyp set 1)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 7, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.75, val loss: 0.5039)
+
+Building CNN model... (hyp set 2)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 5, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7952, val loss: 0.4801)
+
+Building CNN model... (hyp set 3)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 3, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7711, val loss: 0.4955)
+
+Building CNN model... (hyp set 4)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 7, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7801, val loss: 0.4969)
+
+Building CNN model... (hyp set 5)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 5, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7681, val loss: 0.4916)
+
+Building CNN model... (hyp set 6)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 7, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7711, val loss: 0.5051)
+
+Building CNN model... (hyp set 7)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 5, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7922, val loss: 0.4945)
+
+Building CNN model... (hyp set 8)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 3, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7711, val loss: 0.5006)
+
+Building CNN model... (hyp set 9)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 7, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7892, val loss: 0.502)
+
+*** CURRENT K FOLD: 2018 ***
+
+Splitting data into test and train...
+All PBP data shape: (308414, 255)
+Training data shape: (280400, 255)
+Testing data shape: (28014, 255)
+Games in training data: 3321
+Games in testing data: 333
+
+Populating X (images) for train and test...
+Image dimensions: (40, 144, 1)
+
+Populating Y (labels) for train and test...
+Converting to numpy arrays...
+X_train: (3321, 40, 144, 1)
+X_test : (333, 40, 144, 1)
+Y_train: (3321,)
+Y_test : (333,)
+
+Building CNN model... (hyp set 0)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 5, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7508, val loss: 0.5208)
+
+Building CNN model... (hyp set 1)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 7, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7508, val loss: 0.5317)
+
+Building CNN model... (hyp set 2)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 5, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7447, val loss: 0.5222)
+
+Building CNN model... (hyp set 3)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 3, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7387, val loss: 0.5294)
+
+Building CNN model... (hyp set 4)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 7, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7417, val loss: 0.5254)
+
+Building CNN model... (hyp set 5)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 5, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7538, val loss: 0.521)
+
+Building CNN model... (hyp set 6)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 7, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7628, val loss: 0.5257)
+
+Building CNN model... (hyp set 7)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 5, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7297, val loss: 0.5221)
+
+Building CNN model... (hyp set 8)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 3, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7538, val loss: 0.5226)
+
+Building CNN model... (hyp set 9)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 7, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7417, val loss: 0.5296)
+
+*** CURRENT K FOLD: 2019 ***
+
+Splitting data into test and train...
+All PBP data shape: (308414, 255)
+Training data shape: (280476, 255)
+Testing data shape: (27938, 255)
+Games in training data: 3322
+Games in testing data: 332
+
+Populating X (images) for train and test...
+Image dimensions: (40, 144, 1)
+
+Populating Y (labels) for train and test...
+Converting to numpy arrays...
+X_train: (3322, 40, 144, 1)
+X_test : (332, 40, 144, 1)
+Y_train: (3322,)
+Y_test : (332,)
+
+Building CNN model... (hyp set 0)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 5, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7018, val loss: 0.558)
+
+Building CNN model... (hyp set 1)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 7, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7169, val loss: 0.5677)
+
+Building CNN model... (hyp set 2)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 5, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.738, val loss: 0.5348)
+
+Building CNN model... (hyp set 3)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 3, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7199, val loss: 0.5523)
+
+Building CNN model... (hyp set 4)
+{'NK': 50, 'ACT': 'relu', 'KS_0': 7, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7259, val loss: 0.5521)
+
+Building CNN model... (hyp set 5)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 5, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.738, val loss: 0.5494)
+
+Building CNN model... (hyp set 6)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 7, 'KS_1': 5, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7078, val loss: 0.5508)
+
+Building CNN model... (hyp set 7)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 5, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.747, val loss: 0.5425)
+
+Building CNN model... (hyp set 8)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 3, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7078, val loss: 0.5522)
+
+Building CNN model... (hyp set 9)
+{'NK': 50, 'ACT': 'tanh', 'KS_0': 7, 'KS_1': 3, 'PS_0': 2, 'PS_1': 2, 'HLS': 64, 'DROP': 0.3, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.6958, val loss: 0.5566)
