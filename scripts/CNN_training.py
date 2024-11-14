@@ -273,7 +273,7 @@ for VAL_YEAR in years:
 
     SET_IDS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     hp_sets = [set0, set1, set2, set3, set4, set5, set6, set7, set8, set9]
-    acc_loss_sets = {}
+    acc_loss_sets = []
 
     for ID in SET_IDS:
         print(f"\nBuilding CNN model... (hyp set {ID})")
@@ -321,7 +321,7 @@ for VAL_YEAR in years:
         best_val_acc = hist['val_accuracy'][-PATIENCE-1]
         best_val_loss = hist['val_loss'][-PATIENCE-1]
         print(f"Training Complete! (val accuracy: {round(best_val_acc, 4)}, val loss: {round(best_val_loss, 4)})")
-        acc_loss_sets[ID] = (best_val_acc, best_val_loss)
+        acc_loss_sets.append((best_val_acc, best_val_loss))
 
     # *******************************
     # ** WRITE RESULTS TO TXT FILE **
@@ -333,4 +333,8 @@ for VAL_YEAR in years:
         (val_acc, val_loss) = acc_loss_sets[ID]
         file.write(f"** Set ID: {ID}\n")
         file.write(f"** Validation Accuracy: {round(val_acc, 4)}, Validation Loss: {round(val_loss, 4)}\n\n")
+
+    best_loss = np.min([x[1] for x in acc_loss_sets])
+    best_loss_id = np.argmin([x[1] for x in acc_loss_sets])
+    file.write(f"Best Loss: {round(best_loss, 4)} for hyperparameter set: {best_loss_id}\n")
     file.close()
