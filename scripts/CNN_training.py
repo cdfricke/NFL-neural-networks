@@ -104,7 +104,7 @@ print("FINAL SHAPE:", df_pbp.shape)
 # ** TRAIN TEST SPLIT **
 # **********************
 print("\nSplitting data into test and train...")
-VAL_YEAR = 2009
+VAL_YEAR = 2010
 df_train = df_pbp[df_pbp['season'] != VAL_YEAR]
 df_test = df_pbp[df_pbp['season'] == VAL_YEAR]
 train_games = df_train['game_id'].unique()
@@ -164,63 +164,142 @@ print("Y_test :", Y_test.shape)
 # *****************
 # ** BUILD MODEL **
 # *****************
-NUM_FILTERS = 25
-FILTER_SIZE_0 = 5
-FILTER_SIZE_1 = 3
-POOLING_SIZE_0 = 2
-POOLING_SIZE_1 = 2
-HIDDEN_SIZE = 64
-DROPOUT = 0.2
-model_hyp = {'NUM_FILTERS': NUM_FILTERS,
-             'FILTER_SIZE_0': FILTER_SIZE_0,
-             'FILTER_SIZE_1': FILTER_SIZE_1,
-             'POOLING_SIZE_0': POOLING_SIZE_0,
-             'POOLING_SIZE_1': POOLING_SIZE_1,
-             'HIDDEN_SIZE': HIDDEN_SIZE,
-             'DROPOUT': DROPOUT
-             }
+# map an ID to a set of model hyperparams
+set0 = {'NK': 50,       # number of kernels
+        'ACT': 'relu',  # activation function
+        'KS_0': 5,      # Kernel size, layer 0
+        'KS_1': 5,      # Kernel size, layer 2
+        'PS_0': 2,      # pooling size, layer 1
+        'PS_1': 2,      # pooling size, layer 3
+        'HLS': 64,      # Hidden layer size
+        'DROP': 0.0,    # dropout fraction
+        'BATCH': 32     # batch size
+        }
+set1 = {'NK': 50,
+        'ACT': 'relu',
+        'KS_0': 7,
+        'KS_1': 5,
+        'PS_0': 2,
+        'PS_1': 2,
+        'HLS': 64,
+        'DROP': 0.0,
+        'BATCH': 32
+        }
+set2 = {'NK': 50,
+        'ACT': 'relu',
+        'KS_0': 5,
+        'KS_1': 3,
+        'PS_0': 2,
+        'PS_1': 2,
+        'HLS': 64,
+        'DROP': 0.0,
+        'BATCH': 32
+        }
+set3 = {'NK': 50,
+        'ACT': 'relu',
+        'KS_0': 3,
+        'KS_1': 3,
+        'PS_0': 2,
+        'PS_1': 2,
+        'HLS': 64,
+        'DROP': 0.0,
+        'BATCH': 32
+        }
+set4 = {'NK': 50,
+        'ACT': 'tanh',
+        'KS_0': 5,
+        'KS_1': 5,
+        'PS_0': 2,
+        'PS_1': 2,
+        'HLS': 64,
+        'DROP': 0.0,
+        'BATCH': 32
+        }
+set5 = {'NK': 50,
+        'ACT': 'tanh',
+        'KS_0': 7,
+        'KS_1': 5,
+        'PS_0': 2,
+        'PS_1': 2,
+        'HLS': 64,
+        'DROP': 0.0,
+        'BATCH': 32
+        }
+set6 = {'NK': 50,
+        'ACT': 'tanh',
+        'KS_0': 5,
+        'KS_1': 3,
+        'PS_0': 2,
+        'PS_1': 2,
+        'HLS': 64,
+        'DROP': 0.0,
+        'BATCH': 32
+        }
+set7 = {'NK': 50,
+        'ACT': 'tanh',
+        'KS_0': 3,
+        'KS_1': 3,
+        'PS_0': 2,
+        'PS_1': 2,
+        'HLS': 64,
+        'DROP': 0.2,
+        'BATCH': 32
+        }
 
-print("\nBuilding CNN model...")
-print(model_hyp)
-model = models.Sequential(layers=[
-    Input(IMAGE_SHAPE),
-    Conv2D(filters=NUM_FILTERS, kernel_size=FILTER_SIZE_0, activation='relu'),  # first conv layer
-    MaxPooling2D(pool_size=POOLING_SIZE_0),                                     # first pooling layer
-    Conv2D(filters=NUM_FILTERS, kernel_size=FILTER_SIZE_1),                     # second conv layer
-    MaxPooling2D(pool_size=POOLING_SIZE_1),                                     # second pooling layer
-    Flatten(),                                                                  # flatten for input to FCN
-    Dense(units=HIDDEN_SIZE, activation='relu'),                                # Hidden layer of FCN
-    Dropout(DROPOUT),                                                           # Dropout layer to avoid overfitting
-    Dense(units=1, activation='sigmoid')                                        # Output layer of FCN (1 or 0)
-])
+SET_IDS = [0, 1, 2, 3, 4, 5, 6, 7]
+hp_sets = {0: set0, 1: set1, 2: set2, 3: set3, 4: set4, 5: set5, 6: set6, 7: set7}
+acc_loss_sets = {}
 
-LOSS_FUNC = 'binary_crossentropy'
-OPTIMIZER = keras.optimizers.Adam(learning_rate=0.0001)
-print(f"Compiling model... (loss: {LOSS_FUNC}, opt: {OPTIMIZER})")
-model.compile(optimizer=OPTIMIZER, loss=LOSS_FUNC, metrics=['accuracy'])
+for ID in SET_IDS:
+    print(f"\nBuilding CNN model... (hyp set {ID})")
+    param_set = hp_sets[ID]
+    print(param_set)
+    model = models.Sequential(layers=[
+        Input(IMAGE_SHAPE),
+        Conv2D(filters=param_set['NK'], kernel_size=param_set['KS_0'], activation=param_set['ACT']),
+        MaxPooling2D(pool_size=param_set['PS_0']),
+        Conv2D(filters=param_set['NK'], kernel_size=param_set['KS_1']),
+        MaxPooling2D(pool_size=param_set['PS_1']),
+        Flatten(),
+        Dense(units=param_set['HLS'], activation=param_set['ACT']),
+        Dropout(param_set['DROP']),
+        Dense(units=1, activation='sigmoid')
+    ])
 
-# *****************
-# ** TRAIN MODEL **
-# *****************
-PATIENCE = 10
-CALLBACKS = [keras.callbacks.EarlyStopping(monitor='val_accuracy', patience=PATIENCE),
-             keras.callbacks.ModelCheckpoint('../models/best_CNN_model.keras', save_best_only=True, verbose=1)]
-EPOCHS = 50
-BATCH_SIZE = 32
+    LOSS_FUNC = 'binary_crossentropy'
+    OPTIMIZER = keras.optimizers.Adam(learning_rate=0.0005)
+    print(f"Compiling model... (loss: {LOSS_FUNC}, opt: adam)")
+    model.compile(optimizer=OPTIMIZER, loss=LOSS_FUNC, metrics=['accuracy'])
 
-print(f'Training model... (epochs: {EPOCHS}, batch size:{BATCH_SIZE})')
-training_results = model.fit(
-    x=X_train,
-    y=Y_train,
-    batch_size=BATCH_SIZE,
-    epochs=EPOCHS,
-    callbacks=CALLBACKS,
-    validation_data=(X_test, Y_test),
-    verbose=1
-)
-history = training_results.history
-best_acc = history['accuracy'][-PATIENCE-1]
-best_val_acc = history['val_accuracy'][-PATIENCE-1]
-best_loss = history['loss'][-PATIENCE-1]
-best_val_loss = history['val_loss'][-PATIENCE-1]
-print(f"Training Complete! (val accuracy: {round(best_val_acc, 4)}, val loss: {round(best_val_loss, 4)})")
+    # *****************
+    # ** TRAIN MODEL **
+    # *****************
+    PATIENCE = 10
+    CALLBACKS = [keras.callbacks.EarlyStopping(monitor='val_loss', patience=PATIENCE),
+                 keras.callbacks.ModelCheckpoint(f'../models/best_CNN_model_set{ID}.keras', save_best_only=True, verbose=0)]
+    EPOCHS = 100
+    BATCH_SIZE = param_set['BATCH']
+
+    print(f'Training model... (epochs: {EPOCHS}, batch size: {BATCH_SIZE})')
+    training_results = model.fit(
+        x=X_train,
+        y=Y_train,
+        batch_size=BATCH_SIZE,
+        epochs=EPOCHS,
+        callbacks=CALLBACKS,
+        validation_data=(X_test, Y_test),
+        verbose=0
+    )
+    # Get performance metrics
+    hist = training_results.history
+    best_val_acc = hist['val_accuracy'][-PATIENCE-1]
+    best_val_loss = hist['val_loss'][-PATIENCE-1]
+    print(f"Training Complete! (val accuracy: {round(best_val_acc, 4)}, val loss: {round(best_val_loss, 4)})")
+    acc_loss_sets[ID] = (best_val_acc, best_val_loss)
+
+print("** MODEL RESULTS **")
+for ID in SET_IDS:
+    (val_acc, val_loss) = acc_loss_sets[ID]
+    print("Set ID:", ID)
+    print("Validation Accuracy:", val_acc, "Validation Loss:", val_loss)
+    print()
