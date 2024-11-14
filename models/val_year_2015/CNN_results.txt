@@ -1,32 +1,32 @@
 ** MODEL RESULTS **
 ** Set ID: 0
-** Validation Accuracy: 0.7417, Validation Loss: 0.5606
+** Validation Accuracy: 0.7508, Validation Loss: 0.5373
 
 ** Set ID: 1
-** Validation Accuracy: 0.7327, Validation Loss: 0.5538
+** Validation Accuracy: 0.7447, Validation Loss: 0.5635
 
 ** Set ID: 2
-** Validation Accuracy: 0.7417, Validation Loss: 0.5318
+** Validation Accuracy: 0.7447, Validation Loss: 0.5412
 
 ** Set ID: 3
-** Validation Accuracy: 0.7538, Validation Loss: 0.5449
+** Validation Accuracy: 0.7598, Validation Loss: 0.5421
 
 ** Set ID: 4
-** Validation Accuracy: 0.7508, Validation Loss: 0.5495
+** Validation Accuracy: 0.7477, Validation Loss: 0.559
 
 ** Set ID: 5
-** Validation Accuracy: 0.7297, Validation Loss: 0.5446
+** Validation Accuracy: 0.7387, Validation Loss: 0.5474
 
 ** Set ID: 6
-** Validation Accuracy: 0.7297, Validation Loss: 0.5507
+** Validation Accuracy: 0.7417, Validation Loss: 0.5468
 
 ** Set ID: 7
-** Validation Accuracy: 0.7477, Validation Loss: 0.5413
+** Validation Accuracy: 0.7297, Validation Loss: 0.5562
 
 ** Set ID: 8
-** Validation Accuracy: 0.7357, Validation Loss: 0.5456
+** Validation Accuracy: 0.7598, Validation Loss: 0.5424
 
 ** Set ID: 9
-** Validation Accuracy: 0.7447, Validation Loss: 0.5496
+** Validation Accuracy: 0.7237, Validation Loss: 0.5687
 
-Best Loss: 0.5318 for hyperparameter set: 2
+Best Accuracy: 0.7237 for hyperparameter set: 9

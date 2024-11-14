@@ -334,7 +334,7 @@ for VAL_YEAR in years:
         file.write(f"** Set ID: {ID}\n")
         file.write(f"** Validation Accuracy: {round(val_acc, 4)}, Validation Loss: {round(val_loss, 4)}\n\n")
 
-    best_loss = np.min([x[1] for x in acc_loss_sets])
-    best_loss_id = np.argmin([x[1] for x in acc_loss_sets])
-    file.write(f"Best Loss: {round(best_loss, 4)} for hyperparameter set: {best_loss_id}\n")
+    best_acc = np.min([x[0] for x in acc_loss_sets])
+    best_acc_id = np.argmin([x[0] for x in acc_loss_sets])
+    file.write(f"Best Accuracy: {round(best_acc, 4)} for hyperparameter set: {best_acc_id}\n")
     file.close()
