@@ -10,7 +10,7 @@ from myFuncs import get_image
 from sklearn.preprocessing import MinMaxScaler
 import numpy as np
 from tensorflow import keras
-from tensorflow.keras.layers import Conv2D, MaxPooling2D, Dense, Flatten, Input, Dropout
+from tensorflow.keras.layers import Dense, Flatten, Input, Dropout
 from keras import models
 
 years = [x for x in range(2009, 2020)]
