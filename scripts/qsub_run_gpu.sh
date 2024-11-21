@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#PBS -N CNNTRAINING
+#PBS -N FCNTRAINING
 #PBS -A PAS2038
 #PBS -l walltime=3:00:00
 #PBS -l nodes=1:ppn=8:gpus=1
@@ -14,5 +14,5 @@ source /fs/ess/PAS2038/PHYSICS_5680_OSU/jupyter/bin/activate
 which python
 module load cuda/11.2.2
 #
-cd $HOME/PHYS5680/phys-5680-proj/scripts
-python -u CNN_training.py
+cd $HOME/PHYS5680/phys-5680-proj/scripts || exit
+python -u FCN_training.py
