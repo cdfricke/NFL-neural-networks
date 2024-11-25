@@ -14,5 +14,5 @@ source /fs/ess/PAS2038/PHYSICS_5680_OSU/jupyter/bin/activate
 which python
 module load cuda/11.2.2
 #
-cd $HOME/PHYS5680/phys-5680-proj/scripts || exit
+cd $HOME/osc_classes/PHYSICS_5680_OSU/NFL-neural-networks/scripts || exit
 python -u FCN_training.py
