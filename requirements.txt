@@ -4,3 +4,4 @@ plotly-express
 scikit-learn
 keras
 tensorflow
+tabulate
