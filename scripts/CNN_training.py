@@ -76,7 +76,7 @@ numeric_features = df_pbp_numeric.columns.tolist()
 print("Isolating image features and scaling them...")
 scaler = MinMaxScaler()
 # image_features = numeric_features[29:31] + [numeric_features[33]] + numeric_features[37:89]
-image_features = numeric_features[5:]
+image_features = numeric_features[5:89]
 df_pbp[image_features] = scaler.fit_transform(df_pbp[image_features])
 
 print("FINAL SHAPE:", df_pbp.shape)
@@ -170,103 +170,103 @@ for VAL_YEAR in years:
     # *****************
     MODEL_DIRECTORY = f'../models/val_year_{VAL_YEAR}/'  # directory where models and training results will be saved
     # map an ID to a set of model hyperparams
-    set0 = {'NK': 50,       # number of kernels
+    set0 = {'NK': 30,       # number of kernels
             'ACT': 'relu',  # activation function
             'KS_0': 5,      # Kernel size, layer 0
             'KS_1': 5,      # Kernel size, layer 2
             'PS_0': 2,      # pooling size, layer 1
             'PS_1': 2,      # pooling size, layer 3
-            'HLS': 64,      # Hidden layer size
+            'HLS': 32,      # Hidden layer size
             'DROP': 0.3,    # dropout fraction
             'BATCH': 32     # batch size
             }
-    set1 = {'NK': 50,
+    set1 = {'NK': 30,
             'ACT': 'relu',
             'KS_0': 7,
             'KS_1': 5,
             'PS_0': 2,
             'PS_1': 2,
-            'HLS': 64,
+            'HLS': 32,
             'DROP': 0.3,
             'BATCH': 32
             }
-    set2 = {'NK': 50,
+    set2 = {'NK': 30,
             'ACT': 'relu',
             'KS_0': 5,
             'KS_1': 3,
             'PS_0': 2,
             'PS_1': 2,
-            'HLS': 64,
+            'HLS': 32,
             'DROP': 0.3,
             'BATCH': 32
             }
-    set3 = {'NK': 50,
+    set3 = {'NK': 30,
             'ACT': 'relu',
             'KS_0': 3,
             'KS_1': 3,
             'PS_0': 2,
             'PS_1': 2,
-            'HLS': 64,
+            'HLS': 32,
             'DROP': 0.3,
             'BATCH': 32
             }
-    set4 = {'NK': 50,
+    set4 = {'NK': 30,
             'ACT': 'relu',
             'KS_0': 7,
             'KS_1': 3,
             'PS_0': 2,
             'PS_1': 2,
-            'HLS': 64,
+            'HLS': 32,
             'DROP': 0.3,
             'BATCH': 32
             }
-    set5 = {'NK': 50,
+    set5 = {'NK': 30,
             'ACT': 'tanh',
             'KS_0': 5,
             'KS_1': 5,
             'PS_0': 2,
             'PS_1': 2,
-            'HLS': 64,
+            'HLS': 32,
             'DROP': 0.3,
             'BATCH': 32
             }
-    set6 = {'NK': 50,
+    set6 = {'NK': 30,
             'ACT': 'tanh',
             'KS_0': 7,
             'KS_1': 5,
             'PS_0': 2,
             'PS_1': 2,
-            'HLS': 64,
+            'HLS': 32,
             'DROP': 0.3,
             'BATCH': 32
             }
-    set7 = {'NK': 50,
+    set7 = {'NK': 30,
             'ACT': 'tanh',
             'KS_0': 5,
             'KS_1': 3,
             'PS_0': 2,
             'PS_1': 2,
-            'HLS': 64,
+            'HLS': 32,
             'DROP': 0.3,
             'BATCH': 32
             }
-    set8 = {'NK': 50,
+    set8 = {'NK': 30,
             'ACT': 'tanh',
             'KS_0': 3,
             'KS_1': 3,
             'PS_0': 2,
             'PS_1': 2,
-            'HLS': 64,
+            'HLS': 32,
             'DROP': 0.3,
             'BATCH': 32
             }
-    set9 = {'NK': 50,
+    set9 = {'NK': 30,
             'ACT': 'tanh',
             'KS_0': 7,
             'KS_1': 3,
             'PS_0': 2,
             'PS_1': 2,
-            'HLS': 64,
+            'HLS': 32,
             'DROP': 0.3,
             'BATCH': 32
             }
@@ -334,7 +334,7 @@ for VAL_YEAR in years:
         file.write(f"** Set ID: {ID}\n")
         file.write(f"** Validation Accuracy: {round(val_acc, 4)}, Validation Loss: {round(val_loss, 4)}\n\n")
 
-    best_acc = np.min([x[0] for x in acc_loss_sets])
-    best_acc_id = np.argmin([x[0] for x in acc_loss_sets])
+    best_acc = np.max([x[0] for x in acc_loss_sets])
+    best_acc_id = np.argmax([x[0] for x in acc_loss_sets])
     file.write(f"Best Accuracy: {round(best_acc, 4)} for hyperparameter set: {best_acc_id}\n")
     file.close()

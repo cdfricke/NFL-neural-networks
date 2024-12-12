@@ -1,0 +1,632 @@
+Resetting modules to system default
+/fs/ess/PAS2038/PHYSICS_5680_OSU/jupyter/bin/python
+2024-11-24 20:13:00.047078: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2024-11-24 20:13:00.804657: E tensorflow/stream_executor/cuda/cuda_blas.cc:2981] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2024-11-24 20:13:05.461028: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer.so.7'; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/mvapich2/intel/19.0/2.3.3/lib:/apps/gnu/8.4.0/lib64:/apps/gnu/8.4.0/lib:/opt/intel/19.0.5/debugger_2019/libipt/intel64/lib:/opt/intel/19.0.5/compilers_and_libraries_2019/linux/lib/intel64_lin:/opt/intel/19.0.5/compilers_and_libraries_2019/linux/daal/lib/intel64_lin:/opt/intel/19.0.5/compilers_and_libraries_2019/linux/ipp/lib/intel64_lin:/opt/intel/19.0.5/compilers_and_libraries_2019/linux/mkl/lib/intel64_lin:/opt/intel/19.0.5/compilers_and_libraries_2019/linux/tbb/lib/intel64_lin/gcc4.4:/opt/ddn/cci/lib:/opt/ddn/ime/lib:/opt/ddn/isa-l/lib:/apps/cuda/11.2.2/lib64
+2024-11-24 20:13:05.461613: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer_plugin.so.7'; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /opt/mvapich2/intel/19.0/2.3.3/lib:/apps/gnu/8.4.0/lib64:/apps/gnu/8.4.0/lib:/opt/intel/19.0.5/debugger_2019/libipt/intel64/lib:/opt/intel/19.0.5/compilers_and_libraries_2019/linux/lib/intel64_lin:/opt/intel/19.0.5/compilers_and_libraries_2019/linux/daal/lib/intel64_lin:/opt/intel/19.0.5/compilers_and_libraries_2019/linux/ipp/lib/intel64_lin:/opt/intel/19.0.5/compilers_and_libraries_2019/linux/mkl/lib/intel64_lin:/opt/intel/19.0.5/compilers_and_libraries_2019/linux/tbb/lib/intel64_lin/gcc4.4:/opt/ddn/cci/lib:/opt/ddn/ime/lib:/opt/ddn/isa-l/lib:/apps/cuda/11.2.2/lib64
+2024-11-24 20:13:05.461634: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+Reading cleaned PBP Data...
+Reading Game Data...
+
+Preprocessing PBP Data...
+INITIAL SHAPE: (614132, 257)
+Dropping duplicates, filling NaNs...
+Isolating home team possession plays...
+Isolating numeric features...
+Isolating image features and scaling them...
+FINAL SHAPE: (308414, 255)
+
+Preprocessing Game Data...
+INITIAL SHAPE: (3654, 11)
+Dropping duplicates, filling NaNs...
+Running Feature Engineering...
+FINAL SHAPE: (308414, 255)
+
+*** CURRENT K FOLD: 2009 ***
+
+Splitting data into test and train...
+All PBP data shape: (308414, 255)
+Training data shape: (280416, 255)
+Testing data shape: (27998, 255)
+Games in training data: 3321
+Games in testing data: 333
+
+Populating X (images) for train and test...
+Image dimensions: (40, 144, 1)
+
+Populating Y (labels) for train and test...
+Converting to numpy arrays...
+X_train: (3321, 40, 144, 1)
+X_test : (333, 40, 144, 1)
+Y_train: (3321,)
+Y_test : (333,)
+
+Building FCN model... (hyp set 0)
+{'DL0': 16, 'DL1': 16, 'DL2': 16, 'ACT': 'tanh', 'DROP': 0.5, 'BATCH': 32}
+2024-11-24 20:14:13.582422: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2024-11-24 20:14:15.515039: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1616] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 14618 MB memory:  -> device: 0, name: Tesla V100-PCIE-16GB, pci bus id: 0000:3b:00.0, compute capability: 7.0
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7508, val loss: 0.5263)
+
+Building FCN model... (hyp set 1)
+{'DL0': 16, 'DL1': 32, 'DL2': 16, 'ACT': 'tanh', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7568, val loss: 0.5126)
+
+Building FCN model... (hyp set 2)
+{'DL0': 32, 'DL1': 32, 'DL2': 32, 'ACT': 'tanh', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7508, val loss: 0.5231)
+
+Building FCN model... (hyp set 3)
+{'DL0': 16, 'DL1': 16, 'DL2': 16, 'ACT': 'relu', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7598, val loss: 0.5339)
+
+Building FCN model... (hyp set 4)
+{'DL0': 16, 'DL1': 32, 'DL2': 16, 'ACT': 'relu', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7658, val loss: 0.5241)
+
+Building FCN model... (hyp set 5)
+{'DL0': 32, 'DL1': 32, 'DL2': 32, 'ACT': 'relu', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7508, val loss: 0.5146)
+
+*** CURRENT K FOLD: 2010 ***
+
+Splitting data into test and train...
+All PBP data shape: (308414, 255)
+Training data shape: (280714, 255)
+Testing data shape: (27700, 255)
+Games in training data: 3321
+Games in testing data: 333
+
+Populating X (images) for train and test...
+Image dimensions: (40, 144, 1)
+
+Populating Y (labels) for train and test...
+Converting to numpy arrays...
+X_train: (3321, 40, 144, 1)
+X_test : (333, 40, 144, 1)
+Y_train: (3321,)
+Y_test : (333,)
+
+Building FCN model... (hyp set 0)
+{'DL0': 16, 'DL1': 16, 'DL2': 16, 'ACT': 'tanh', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7508, val loss: 0.5347)
+
+Building FCN model... (hyp set 1)
+{'DL0': 16, 'DL1': 32, 'DL2': 16, 'ACT': 'tanh', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7598, val loss: 0.5118)
+
+Building FCN model... (hyp set 2)
+{'DL0': 32, 'DL1': 32, 'DL2': 32, 'ACT': 'tanh', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7387, val loss: 0.5084)
+
+Building FCN model... (hyp set 3)
+{'DL0': 16, 'DL1': 16, 'DL2': 16, 'ACT': 'relu', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7477, val loss: 0.5263)
+
+Building FCN model... (hyp set 4)
+{'DL0': 16, 'DL1': 32, 'DL2': 16, 'ACT': 'relu', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7568, val loss: 0.5269)
+
+Building FCN model... (hyp set 5)
+{'DL0': 32, 'DL1': 32, 'DL2': 32, 'ACT': 'relu', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7628, val loss: 0.5184)
+
+*** CURRENT K FOLD: 2011 ***
+
+Splitting data into test and train...
+All PBP data shape: (308414, 255)
+Training data shape: (280687, 255)
+Testing data shape: (27727, 255)
+Games in training data: 3324
+Games in testing data: 330
+
+Populating X (images) for train and test...
+Image dimensions: (40, 144, 1)
+
+Populating Y (labels) for train and test...
+Converting to numpy arrays...
+X_train: (3324, 40, 144, 1)
+X_test : (330, 40, 144, 1)
+Y_train: (3324,)
+Y_test : (330,)
+
+Building FCN model... (hyp set 0)
+{'DL0': 16, 'DL1': 16, 'DL2': 16, 'ACT': 'tanh', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7424, val loss: 0.5397)
+
+Building FCN model... (hyp set 1)
+{'DL0': 16, 'DL1': 32, 'DL2': 16, 'ACT': 'tanh', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7303, val loss: 0.5409)
+
+Building FCN model... (hyp set 2)
+{'DL0': 32, 'DL1': 32, 'DL2': 32, 'ACT': 'tanh', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7394, val loss: 0.5348)
+
+Building FCN model... (hyp set 3)
+{'DL0': 16, 'DL1': 16, 'DL2': 16, 'ACT': 'relu', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7273, val loss: 0.5911)
+
+Building FCN model... (hyp set 4)
+{'DL0': 16, 'DL1': 32, 'DL2': 16, 'ACT': 'relu', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7364, val loss: 0.562)
+
+Building FCN model... (hyp set 5)
+{'DL0': 32, 'DL1': 32, 'DL2': 32, 'ACT': 'relu', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7364, val loss: 0.5459)
+
+*** CURRENT K FOLD: 2012 ***
+
+Splitting data into test and train...
+All PBP data shape: (308414, 255)
+Training data shape: (280307, 255)
+Testing data shape: (28107, 255)
+Games in training data: 3321
+Games in testing data: 333
+
+Populating X (images) for train and test...
+Image dimensions: (40, 144, 1)
+
+Populating Y (labels) for train and test...
+Converting to numpy arrays...
+X_train: (3321, 40, 144, 1)
+X_test : (333, 40, 144, 1)
+Y_train: (3321,)
+Y_test : (333,)
+
+Building FCN model... (hyp set 0)
+{'DL0': 16, 'DL1': 16, 'DL2': 16, 'ACT': 'tanh', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7477, val loss: 0.5461)
+
+Building FCN model... (hyp set 1)
+{'DL0': 16, 'DL1': 32, 'DL2': 16, 'ACT': 'tanh', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7327, val loss: 0.5454)
+
+Building FCN model... (hyp set 2)
+{'DL0': 32, 'DL1': 32, 'DL2': 32, 'ACT': 'tanh', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7417, val loss: 0.5595)
+
+Building FCN model... (hyp set 3)
+{'DL0': 16, 'DL1': 16, 'DL2': 16, 'ACT': 'relu', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7297, val loss: 0.5605)
+
+Building FCN model... (hyp set 4)
+{'DL0': 16, 'DL1': 32, 'DL2': 16, 'ACT': 'relu', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7357, val loss: 0.5753)
+
+Building FCN model... (hyp set 5)
+{'DL0': 32, 'DL1': 32, 'DL2': 32, 'ACT': 'relu', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7357, val loss: 0.5317)
+
+*** CURRENT K FOLD: 2013 ***
+
+Splitting data into test and train...
+All PBP data shape: (308414, 255)
+Training data shape: (279955, 255)
+Testing data shape: (28459, 255)
+Games in training data: 3323
+Games in testing data: 331
+
+Populating X (images) for train and test...
+Image dimensions: (40, 144, 1)
+
+Populating Y (labels) for train and test...
+Converting to numpy arrays...
+X_train: (3323, 40, 144, 1)
+X_test : (331, 40, 144, 1)
+Y_train: (3323,)
+Y_test : (331,)
+
+Building FCN model... (hyp set 0)
+{'DL0': 16, 'DL1': 16, 'DL2': 16, 'ACT': 'tanh', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7432, val loss: 0.5594)
+
+Building FCN model... (hyp set 1)
+{'DL0': 16, 'DL1': 32, 'DL2': 16, 'ACT': 'tanh', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7251, val loss: 0.5539)
+
+Building FCN model... (hyp set 2)
+{'DL0': 32, 'DL1': 32, 'DL2': 32, 'ACT': 'tanh', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.716, val loss: 0.5702)
+
+Building FCN model... (hyp set 3)
+{'DL0': 16, 'DL1': 16, 'DL2': 16, 'ACT': 'relu', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.5861, val loss: 0.6875)
+
+Building FCN model... (hyp set 4)
+{'DL0': 16, 'DL1': 32, 'DL2': 16, 'ACT': 'relu', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7221, val loss: 0.5567)
+
+Building FCN model... (hyp set 5)
+{'DL0': 32, 'DL1': 32, 'DL2': 32, 'ACT': 'relu', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7221, val loss: 0.5575)
+
+*** CURRENT K FOLD: 2014 ***
+
+Splitting data into test and train...
+All PBP data shape: (308414, 255)
+Training data shape: (280505, 255)
+Testing data shape: (27909, 255)
+Games in training data: 3322
+Games in testing data: 332
+
+Populating X (images) for train and test...
+Image dimensions: (40, 144, 1)
+
+Populating Y (labels) for train and test...
+Converting to numpy arrays...
+X_train: (3322, 40, 144, 1)
+X_test : (332, 40, 144, 1)
+Y_train: (3322,)
+Y_test : (332,)
+
+Building FCN model... (hyp set 0)
+{'DL0': 16, 'DL1': 16, 'DL2': 16, 'ACT': 'tanh', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.744, val loss: 0.5629)
+
+Building FCN model... (hyp set 1)
+{'DL0': 16, 'DL1': 32, 'DL2': 16, 'ACT': 'tanh', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.741, val loss: 0.5639)
+
+Building FCN model... (hyp set 2)
+{'DL0': 32, 'DL1': 32, 'DL2': 32, 'ACT': 'tanh', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7199, val loss: 0.556)
+
+Building FCN model... (hyp set 3)
+{'DL0': 16, 'DL1': 16, 'DL2': 16, 'ACT': 'relu', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.741, val loss: 0.5865)
+
+Building FCN model... (hyp set 4)
+{'DL0': 16, 'DL1': 32, 'DL2': 16, 'ACT': 'relu', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.747, val loss: 0.5991)
+
+Building FCN model... (hyp set 5)
+{'DL0': 32, 'DL1': 32, 'DL2': 32, 'ACT': 'relu', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.738, val loss: 0.5512)
+
+*** CURRENT K FOLD: 2015 ***
+
+Splitting data into test and train...
+All PBP data shape: (308414, 255)
+Training data shape: (279944, 255)
+Testing data shape: (28470, 255)
+Games in training data: 3321
+Games in testing data: 333
+
+Populating X (images) for train and test...
+Image dimensions: (40, 144, 1)
+
+Populating Y (labels) for train and test...
+Converting to numpy arrays...
+X_train: (3321, 40, 144, 1)
+X_test : (333, 40, 144, 1)
+Y_train: (3321,)
+Y_test : (333,)
+
+Building FCN model... (hyp set 0)
+{'DL0': 16, 'DL1': 16, 'DL2': 16, 'ACT': 'tanh', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7417, val loss: 0.5418)
+
+Building FCN model... (hyp set 1)
+{'DL0': 16, 'DL1': 32, 'DL2': 16, 'ACT': 'tanh', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7417, val loss: 0.5591)
+
+Building FCN model... (hyp set 2)
+{'DL0': 32, 'DL1': 32, 'DL2': 32, 'ACT': 'tanh', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7387, val loss: 0.5705)
+
+Building FCN model... (hyp set 3)
+{'DL0': 16, 'DL1': 16, 'DL2': 16, 'ACT': 'relu', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7477, val loss: 0.5479)
+
+Building FCN model... (hyp set 4)
+{'DL0': 16, 'DL1': 32, 'DL2': 16, 'ACT': 'relu', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7477, val loss: 0.5489)
+
+Building FCN model... (hyp set 5)
+{'DL0': 32, 'DL1': 32, 'DL2': 32, 'ACT': 'relu', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7568, val loss: 0.5441)
+
+*** CURRENT K FOLD: 2016 ***
+
+Splitting data into test and train...
+All PBP data shape: (308414, 255)
+Training data shape: (280338, 255)
+Testing data shape: (28076, 255)
+Games in training data: 3322
+Games in testing data: 332
+
+Populating X (images) for train and test...
+Image dimensions: (40, 144, 1)
+
+Populating Y (labels) for train and test...
+Converting to numpy arrays...
+X_train: (3322, 40, 144, 1)
+X_test : (332, 40, 144, 1)
+Y_train: (3322,)
+Y_test : (332,)
+
+Building FCN model... (hyp set 0)
+{'DL0': 16, 'DL1': 16, 'DL2': 16, 'ACT': 'tanh', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.738, val loss: 0.5799)
+
+Building FCN model... (hyp set 1)
+{'DL0': 16, 'DL1': 32, 'DL2': 16, 'ACT': 'tanh', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7229, val loss: 0.5709)
+
+Building FCN model... (hyp set 2)
+{'DL0': 32, 'DL1': 32, 'DL2': 32, 'ACT': 'tanh', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7319, val loss: 0.5747)
+
+Building FCN model... (hyp set 3)
+{'DL0': 16, 'DL1': 16, 'DL2': 16, 'ACT': 'relu', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.741, val loss: 0.593)
+
+Building FCN model... (hyp set 4)
+{'DL0': 16, 'DL1': 32, 'DL2': 16, 'ACT': 'relu', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.741, val loss: 0.5528)
+
+Building FCN model... (hyp set 5)
+{'DL0': 32, 'DL1': 32, 'DL2': 32, 'ACT': 'relu', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.747, val loss: 0.5586)
+
+*** CURRENT K FOLD: 2017 ***
+
+Splitting data into test and train...
+All PBP data shape: (308414, 255)
+Training data shape: (280398, 255)
+Testing data shape: (28016, 255)
+Games in training data: 3322
+Games in testing data: 332
+
+Populating X (images) for train and test...
+Image dimensions: (40, 144, 1)
+
+Populating Y (labels) for train and test...
+Converting to numpy arrays...
+X_train: (3322, 40, 144, 1)
+X_test : (332, 40, 144, 1)
+Y_train: (3322,)
+Y_test : (332,)
+
+Building FCN model... (hyp set 0)
+{'DL0': 16, 'DL1': 16, 'DL2': 16, 'ACT': 'tanh', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7831, val loss: 0.4992)
+
+Building FCN model... (hyp set 1)
+{'DL0': 16, 'DL1': 32, 'DL2': 16, 'ACT': 'tanh', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7861, val loss: 0.4971)
+
+Building FCN model... (hyp set 2)
+{'DL0': 32, 'DL1': 32, 'DL2': 32, 'ACT': 'tanh', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7831, val loss: 0.505)
+
+Building FCN model... (hyp set 3)
+{'DL0': 16, 'DL1': 16, 'DL2': 16, 'ACT': 'relu', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.5633, val loss: 0.6892)
+
+Building FCN model... (hyp set 4)
+{'DL0': 16, 'DL1': 32, 'DL2': 16, 'ACT': 'relu', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7861, val loss: 0.5608)
+
+Building FCN model... (hyp set 5)
+{'DL0': 32, 'DL1': 32, 'DL2': 32, 'ACT': 'relu', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7831, val loss: 0.5177)
+
+*** CURRENT K FOLD: 2018 ***
+
+Splitting data into test and train...
+All PBP data shape: (308414, 255)
+Training data shape: (280400, 255)
+Testing data shape: (28014, 255)
+Games in training data: 3321
+Games in testing data: 333
+
+Populating X (images) for train and test...
+Image dimensions: (40, 144, 1)
+
+Populating Y (labels) for train and test...
+Converting to numpy arrays...
+X_train: (3321, 40, 144, 1)
+X_test : (333, 40, 144, 1)
+Y_train: (3321,)
+Y_test : (333,)
+
+Building FCN model... (hyp set 0)
+{'DL0': 16, 'DL1': 16, 'DL2': 16, 'ACT': 'tanh', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7417, val loss: 0.5372)
+
+Building FCN model... (hyp set 1)
+{'DL0': 16, 'DL1': 32, 'DL2': 16, 'ACT': 'tanh', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7417, val loss: 0.5292)
+
+Building FCN model... (hyp set 2)
+{'DL0': 32, 'DL1': 32, 'DL2': 32, 'ACT': 'tanh', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7477, val loss: 0.5305)
+
+Building FCN model... (hyp set 3)
+{'DL0': 16, 'DL1': 16, 'DL2': 16, 'ACT': 'relu', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7538, val loss: 0.5639)
+
+Building FCN model... (hyp set 4)
+{'DL0': 16, 'DL1': 32, 'DL2': 16, 'ACT': 'relu', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7568, val loss: 0.5287)
+
+Building FCN model... (hyp set 5)
+{'DL0': 32, 'DL1': 32, 'DL2': 32, 'ACT': 'relu', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7508, val loss: 0.5206)
+
+*** CURRENT K FOLD: 2019 ***
+
+Splitting data into test and train...
+All PBP data shape: (308414, 255)
+Training data shape: (280476, 255)
+Testing data shape: (27938, 255)
+Games in training data: 3322
+Games in testing data: 332
+
+Populating X (images) for train and test...
+Image dimensions: (40, 144, 1)
+
+Populating Y (labels) for train and test...
+Converting to numpy arrays...
+X_train: (3322, 40, 144, 1)
+X_test : (332, 40, 144, 1)
+Y_train: (3322,)
+Y_test : (332,)
+
+Building FCN model... (hyp set 0)
+{'DL0': 16, 'DL1': 16, 'DL2': 16, 'ACT': 'tanh', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.747, val loss: 0.545)
+
+Building FCN model... (hyp set 1)
+{'DL0': 16, 'DL1': 32, 'DL2': 16, 'ACT': 'tanh', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.75, val loss: 0.5571)
+
+Building FCN model... (hyp set 2)
+{'DL0': 32, 'DL1': 32, 'DL2': 32, 'ACT': 'tanh', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7319, val loss: 0.552)
+
+Building FCN model... (hyp set 3)
+{'DL0': 16, 'DL1': 16, 'DL2': 16, 'ACT': 'relu', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.75, val loss: 0.5409)
+
+Building FCN model... (hyp set 4)
+{'DL0': 16, 'DL1': 32, 'DL2': 16, 'ACT': 'relu', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7259, val loss: 0.6167)
+
+Building FCN model... (hyp set 5)
+{'DL0': 32, 'DL1': 32, 'DL2': 32, 'ACT': 'relu', 'DROP': 0.5, 'BATCH': 32}
+Compiling model... (loss: binary_crossentropy, opt: adam)
+Training model... (epochs: 25, batch size: 32)
+Training Complete! (val accuracy: 0.7349, val loss: 0.5478)

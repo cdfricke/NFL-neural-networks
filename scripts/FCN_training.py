@@ -12,6 +12,41 @@ import numpy as np
 from tensorflow import keras
 from tensorflow.keras.layers import Dense, Flatten, Input, Dropout
 from keras import models
+from sklearn.metrics import confusion_matrix
+from tabulate import tabulate
+
+
+def calc_performance_NN(y_vals_true, y_vals_pred, labels):
+    # Get the numbers for the confusion matrix
+    # To get output: cf_matrix[true_label,pred_label]
+    cf_matrix = confusion_matrix(y_vals_true, y_vals_pred, labels=labels)
+    TP = cf_matrix[0, 0]
+    FN = cf_matrix[0, 1]
+    FP = cf_matrix[1, 0]
+    TN = cf_matrix[1, 1]
+
+    table = [
+        ["", "Predicted Class 1", "Predicted Class 0"],
+        ["True Class 1", TP, FN],
+        ["True Class 0", FP, TN]
+    ]
+    print_table_type = 'fancy_grid'
+    print_table = tabulate(table, headers='firstrow', tablefmt=print_table_type)
+    #
+    precision = TP / (TP + FP)
+    recall = TP / (TP + FN)
+    f1_score = 2.0 / ((1.0 / precision) + (1.0 / recall))
+    #
+    # Return the matrix as part of a dictionary.   We could have just returned the
+    # dictionary itself, but we will be modifying this method and a dictionary makes
+    # it easy to return mtuliple objects in a organized way
+    results = {'confusion_matrix_data': cf_matrix,
+               'confusion_matrix_print_table': print_table,
+               'precision': precision,
+               'recall': recall,
+               'f1_score': f1_score}
+    return results
+
 
 years = [x for x in range(2009, 2020)]
 
@@ -75,7 +110,7 @@ numeric_features = df_pbp_numeric.columns.tolist()
 print("Isolating image features and scaling them...")
 scaler = MinMaxScaler()
 # image_features = numeric_features[29:31] + [numeric_features[33]] + numeric_features[37:89]
-image_features = numeric_features[5:]
+image_features = numeric_features[5:89]
 df_pbp[image_features] = scaler.fit_transform(df_pbp[image_features])
 
 print("FINAL SHAPE:", df_pbp.shape)
@@ -233,6 +268,8 @@ for VAL_YEAR in years:
         OPTIMIZER = keras.optimizers.Adam(learning_rate=0.0005)
         print(f"Compiling model... (loss: {LOSS_FUNC}, opt: adam)")
         model.compile(optimizer=OPTIMIZER, loss=LOSS_FUNC, metrics=['accuracy'])
+        if VAL_YEAR == 2009:
+            print(model.summary())
 
         # *****************
         # ** TRAIN MODEL **
@@ -245,7 +282,7 @@ for VAL_YEAR in years:
         BATCH_SIZE = param_set['BATCH']
 
         print(f'Training model... (epochs: {EPOCHS}, batch size: {BATCH_SIZE})')
-        training_results = model.fit(
+        training_history = model.fit(
             x=X_train,
             y=Y_train,
             batch_size=BATCH_SIZE,
@@ -255,10 +292,15 @@ for VAL_YEAR in years:
             verbose=0
         )
         # Get performance metrics
-        hist = training_results.history
-        best_val_acc = hist['val_accuracy'][-PATIENCE-1]
-        best_val_loss = hist['val_loss'][-PATIENCE-1]
+        y_test_probabilities = model.predict(X_test)[:, 0]
+        y_test_pred = [int(round(x)) for x in y_test_probabilities]
+        results_test = calc_performance_NN(Y_test, y_test_pred, labels=[1, 0])
+
+        hist = training_history.history
+        best_val_acc = hist['val_accuracy'][-PATIENCE - 1]
+        best_val_loss = hist['val_loss'][-PATIENCE - 1]
         print(f"Training Complete! (val accuracy: {round(best_val_acc, 4)}, val loss: {round(best_val_loss, 4)})")
+        print(results_test['confusion_matrix_print_table'])
         acc_loss_sets.append((best_val_acc, best_val_loss))
 
     # *******************************
@@ -272,7 +314,7 @@ for VAL_YEAR in years:
         file.write(f"** Set ID: {ID}\n")
         file.write(f"** Validation Accuracy: {round(val_acc, 4)}, Validation Loss: {round(val_loss, 4)}\n\n")
 
-    best_acc = np.min([x[0] for x in acc_loss_sets])
-    best_acc_id = np.argmin([x[0] for x in acc_loss_sets])
+    best_acc = np.max([x[0] for x in acc_loss_sets])
+    best_acc_id = np.argmax([x[0] for x in acc_loss_sets])
     file.write(f"Best Accuracy: {round(best_acc, 4)} for hyperparameter set: {best_acc_id}\n")
     file.close()
